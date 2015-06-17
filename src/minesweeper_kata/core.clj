@@ -21,9 +21,6 @@
         []
         lines))))
 
-(defn testx []
-  (read-file "field-in"))
-
 (defn cart [colls]
   (if (empty? colls)
     '(())
@@ -38,24 +35,32 @@
     (fn [coords] (get-in matrix coords))
     (cart [(range (- x 1) (+ x 2)) (range (- y 1) (+ y 2))])))
 
-;(println (read-neighbors (testx) 0 0))
-
 (defn count-neighbors
   "get value for coords"
   [matrix x y]
-  (reduce (fn [x next] (if next (+ x next) 0)) 0
-          (read-neighbors matrix x y)))
+  (if (= 1 (get-in matrix [x y]))
+    "b"
+    (reduce (fn [x next] (if next (+ x next) x)) 0
+            (read-neighbors matrix x y)))
+  )
 
-;(println (count-neighbors (testx) 0 0))
-
-;(println (count-neighbors (testx) 1 1))
-
+(println (count-neighbors (read-file "field-in") 2 2))
+(println (read-neighbors (read-file "field-in") 2 2))
+;(println (count-neighbors (read-file "field-in") 0 1))
+;(println (count-neighbors (read-file "field-in") 1 1))
+;(println (count-neighbors (read-file "field-in") 2 2))
 
 (defn magic
   "docstring"
   [file]
   (let [matrix (read-file file)]
-    (map (fn [x] (map (fn [y] (count-neighbors matrix x y)) (range 0 3))) (range 0 3))))
+    (map
+      (fn [x]
+        (map
+          (fn [y]
+            (count-neighbors matrix x y))
+          (range 0 3)))
+      (range 0 3))))
 
 (println (magic "field-in"))
 ;(println (testx))
