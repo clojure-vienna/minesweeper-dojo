@@ -23,10 +23,6 @@
                     (into [] (map #(if (= % \x) 1 0) row)))
                   rows))))
 
-;(defn parse-header [src]
-;  [3 3])
-
-
 (defn neighbourbombs [matrix y x]
   (reduce (fn [result [offset-y offset-x]]
             (+ result (get-in matrix [(+ y offset-y) (+ x offset-x)] 0)))
@@ -46,14 +42,12 @@
                                      (map #(if (= % 0) \space %) val)))
                  input)))
 
-(defn -main [src-file dest-file]
-  (let [input (read-input src-file)
-        [header body] (split-sections input)
-        ;[cols rows] (parse-header header)
-        input-matrix (parse-body body)
-        solution (solve input-matrix)
-        solution-str (serialize solution)]
-    (spit dest-file solution-str)
-    ))
-
-;(-main "input.txt" "solution.txt")
+(defn -main [src-path dest-path]
+  ((comp #(spit dest-path %)
+         serialize
+         solve
+         parse-body
+         second
+         split-sections
+         read-input)
+   src-path))
