@@ -3,7 +3,6 @@
 (use 'clojure.java.io)
 (require '[clojure.string :as str])
 
-
 (defn convert-field
   "return 1 for x else 0"
   [field]
@@ -44,12 +43,6 @@
             (read-neighbors matrix x y)))
   )
 
-(println (count-neighbors (read-file "field-in") 2 2))
-(println (read-neighbors (read-file "field-in") 2 2))
-;(println (count-neighbors (read-file "field-in") 0 1))
-;(println (count-neighbors (read-file "field-in") 1 1))
-;(println (count-neighbors (read-file "field-in") 2 2))
-
 (defn magic
   "docstring"
   [file]
@@ -62,8 +55,5 @@
           (range 0 3)))
       (range 0 3))))
 
+
 (println (magic "field-in"))
-;(println (testx))
-
-
-;(println (cart [[-1 0 1] [-1 0 1]]))
